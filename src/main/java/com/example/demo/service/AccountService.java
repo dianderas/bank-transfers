@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Account;
+import com.example.demo.repository.AccountRepository;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -10,28 +11,29 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class AccountService {
-    private final Map<String, Account> accountRepository = new ConcurrentHashMap<>();
+    private final AccountRepository accountRepository;
+
+    public AccountService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
     public Mono<Account> createAccount(Account account){
-        accountRepository.put(account.getId(), account);
-        return Mono.just(account);
+        return accountRepository.save(account);
     }
 
     public Mono<Account> getAccountById(String id){
-        return Mono.justOrEmpty(accountRepository.get(id));
+        return accountRepository.findById(id);
     }
 
     public Flux<Account> getAllAccounts(){
-        return Flux.fromIterable(accountRepository.values());
+        return accountRepository.findAll();
     }
 
     public Mono<Account> updateAccount(Account account){
-        accountRepository.put(account.getId(), account);
-        return Mono.just(account);
+        return accountRepository.save(account);
     }
 
     public Mono<Void> deleteAccountById(String id){
-        accountRepository.remove(id);
-        return Mono.empty();
+       return accountRepository.deleteById(id);
     }
 }

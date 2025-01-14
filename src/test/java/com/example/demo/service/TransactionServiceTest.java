@@ -22,8 +22,8 @@ public class TransactionServiceTest {
 
     @Test
     void testSuccessfulTransfer() {
-        Account fromAccount = Account.builder().id("1").accountHolder("Juan").balance(100).currency("USD").build();
-        Account toAccount = Account.builder().id("2").accountHolder("Juan").balance(500).currency("USD").build();
+        Account fromAccount = Account.builder().accountHolder("Juan").balance(100).currency("USD").build();
+        Account toAccount = Account.builder().accountHolder("Juan").balance(500).currency("USD").build();
         TransferRequest request = new TransferRequest();
         request.setFromAccountId("1");
         request.setToAccountId("2");
@@ -43,8 +43,8 @@ public class TransactionServiceTest {
 
     @Test
     void testInsufficientFunds() {
-        Account fromAccount = Account.builder().id("1").accountHolder("Juan").balance(100).currency("USD").build();
-        Account toAccount = Account.builder().id("2").accountHolder("Juan").balance(500).currency("USD").build();
+        Account fromAccount = Account.builder().accountHolder("Juan").balance(100).currency("USD").build();
+        Account toAccount = Account.builder().accountHolder("Juan").balance(500).currency("USD").build();
         TransferRequest request = new TransferRequest();
         request.setFromAccountId("1");
         request.setToAccountId("2");
@@ -62,7 +62,7 @@ public class TransactionServiceTest {
 
     @Test
     void testTransferToSameAccount() {
-        Account fromAccount = Account.builder().id("1").accountHolder("Juan").balance(100).currency("USD").build();
+        Account fromAccount = Account.builder().accountHolder("Juan").balance(100).currency("USD").build();
         TransferRequest request = new TransferRequest();
         request.setFromAccountId("1");
         request.setToAccountId("1");
@@ -77,11 +77,11 @@ public class TransactionServiceTest {
 
     @Test
     void testMakeMultipleTransfersSuccess() {
-        Account fromAccount1 = Account.builder().id("1").accountHolder("Juan").balance(500).currency("USD").build();
-        Account toAccount1 = Account.builder().id("2").accountHolder("Maria").balance(300).currency("USD").build();
+        Account fromAccount1 = Account.builder().accountHolder("Juan").balance(500).currency("USD").build();
+        Account toAccount1 = Account.builder().accountHolder("Maria").balance(300).currency("USD").build();
 
-        Account fromAccount2 = Account.builder().id("3").accountHolder("Carlos").balance(1000).currency("USD").build();
-        Account toAccount2 = Account.builder().id("4").accountHolder("Ana").balance(700).currency("USD").build();
+        Account fromAccount2 = Account.builder().accountHolder("Carlos").balance(1000).currency("USD").build();
+        Account toAccount2 = Account.builder().accountHolder("Ana").balance(700).currency("USD").build();
 
         TransferRequest request1 = new TransferRequest();
         request1.setFromAccountId("1");
@@ -114,8 +114,8 @@ public class TransactionServiceTest {
 
     @Test
     void testMakeMultipleTransfersWithFailures() {
-        Account fromAccount = Account.builder().id("1").accountHolder("Juan").balance(100).currency("USD").build();
-        Account toAccount = Account.builder().id("2").accountHolder("Maria").balance(300).currency("USD").build();
+        Account fromAccount = Account.builder().accountHolder("Juan").balance(100).currency("USD").build();
+        Account toAccount = Account.builder().accountHolder("Maria").balance(300).currency("USD").build();
 
         TransferRequest validRequest = new TransferRequest();
         validRequest.setFromAccountId("1");

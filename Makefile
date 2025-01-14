@@ -13,4 +13,4 @@ down:
 	docker-compose down
 
 clean:
-	docker-compose down -V
+	docker-compose down -v

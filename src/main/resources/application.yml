@@ -4,3 +4,11 @@ server:
 spring:
   application:
     name: demo
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/bankdb
+    username: devuser
+    password: devpassword
+  jpa:
+    defer-datasource-initialization: true
+  sql.init:
+    mode: always
