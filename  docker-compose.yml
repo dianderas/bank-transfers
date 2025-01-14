@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres_container
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: devuser
+      POSTGRES_PASSWORD: depassword
+      POSTGRES_DB: bankdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+    container_name: sprint_webflux_app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_R2DBC_URL: r2dbc:postgresql://postgres:5432/bankdb
+      SPRING_R2DBC_USERNAME: devuser
+      SPRING_R2DBC_PASSWORD: devpassword
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
