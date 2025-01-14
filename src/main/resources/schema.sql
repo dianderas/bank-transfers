@@ -11,5 +11,6 @@ CREATE TABLE IF NOT EXISTS transactions (
     to_account_id VARCHAR(36),
     amount DOUBLE PRECISION,
     currency VARCHAR(3),
-    status VARCHAR(20)
+    status VARCHAR(20),
+    message VARCHAR(100)
 );

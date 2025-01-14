@@ -10,5 +10,6 @@ public class TransferResultDTO {
     private String toAccountId;
     private double amount;
     private boolean success;
+    private String currency;
     private String message;
 }

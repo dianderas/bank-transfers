@@ -24,13 +24,6 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
-    @PostMapping("/transfer")
-    public Mono<ResponseEntity<String>> transfer(@Valid @RequestBody TransferRequest request){
-        return transactionService.makeTransfer(request)
-                .map(ResponseEntity::ok)
-                .onErrorResume(error -> Mono.just(ResponseEntity.badRequest().body(error.getMessage())));
-    }
-
     @PostMapping("/transfers")
     public Flux<TransferResultDTO> transferMultiple(@RequestBody Flux<TransferRequest> requests) {
         return transactionService.makeMultipleTransfers(requests);

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Data
@@ -15,9 +16,12 @@ import org.springframework.data.relational.core.mapping.Table;
 public class Transaction {
     @Id
     private String id;
-    private String fromAccount;
-    private String toAccount;
+    @Column("from_account_id")
+    private String fromAccountId;
+    @Column("to_account_id")
+    private String toAccountId;
     private double amount;
     private String currency;
     private String status;
+    private String message;
 }

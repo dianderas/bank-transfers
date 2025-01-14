@@ -4,6 +4,8 @@ import static org.mockito.Mockito.*;
 import com.example.demo.dto.TransferRequest;
 import com.example.demo.dto.TransferResultDTO;
 import com.example.demo.model.Account;
+import com.example.demo.model.Transaction;
+import com.example.demo.repository.TransactionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
@@ -17,7 +19,7 @@ public class TransactionServiceTest {
     @BeforeEach
     void setUp() {
         accountService = mock(AccountService.class);
-        transactionService = new TransactionService(accountService);
+        transactionService = new TransactionService(accountService, mock(TransactionRepository.class));
     }
 
     @Test
@@ -34,7 +36,8 @@ public class TransactionServiceTest {
         when(accountService.updateAccount(fromAccount)).thenReturn(Mono.just(fromAccount));
         when(accountService.updateAccount(toAccount)).thenReturn(Mono.just(toAccount));
 
-        Mono<String> result = transactionService.makeTransfer(request);
+        Mono<String> result = transactionService.makeTransfer(request)
+                .map(transaction -> transaction.getMessage());
 
         StepVerifier.create(result)
                 .expectNext("Transferencia exitosa")
@@ -53,7 +56,8 @@ public class TransactionServiceTest {
         when(accountService.getAccountById("1")).thenReturn(Mono.just(fromAccount));
         when(accountService.getAccountById("2")).thenReturn(Mono.just(toAccount));
 
-        Mono<String> result = transactionService.makeTransfer(request);
+        Mono<String> result = transactionService.makeTransfer(request)
+                .map(Transaction::getMessage);
 
         StepVerifier.create(result)
                 .expectErrorMatches(e -> e instanceof IllegalStateException && e.getMessage().equals("No hay suficiente saldo en la cuenta de origen"))
@@ -68,7 +72,8 @@ public class TransactionServiceTest {
         request.setToAccountId("1");
         request.setAmount(100);
 
-        Mono<String> result = transactionService.makeTransfer(request);
+        Mono<String> result = transactionService.makeTransfer(request)
+                .map(Transaction::getMessage);
 
         StepVerifier.create(result)
                 .expectErrorMatches(e -> e instanceof IllegalArgumentException && e.getMessage().equals("No se puede transferir a la misma cuenta"))
