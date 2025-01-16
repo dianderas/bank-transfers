@@ -12,3 +12,7 @@ spring:
     defer-datasource-initialization: true
   sql.init:
     mode: always
+jwt:
+  secret: put03lQu3LoL33
+  issuer-uri: http://localhost:8080
+  
